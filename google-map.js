@@ -16,11 +16,11 @@
                 }
             },
 
-            on: function (event, callback) {
+            _on: function (options) {
                 // Listen event and run callback in the context of this instance
                 var self = this;
-                google.maps.event.addListener(this.map, event, function (event) {
-                    callback.call(self, event);
+                google.maps.event.addListener(options.element, options.event, function (event) {
+                    options.callback.call(self, event);
                 });
             },
 
@@ -30,7 +30,14 @@
                     lng: options.lng
                 };
 
-                this._createMarker(options);
+                var marker = this._createMarker(options);
+                if (options.event) {
+                    this._on({
+                        element: marker,
+                        event: options.event.name,
+                        callback: options.event.callback
+                    });
+                }
             },
 
             _createMarker: function (options) {
