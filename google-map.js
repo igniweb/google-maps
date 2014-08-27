@@ -14,6 +14,14 @@
                 } else {
                     return this.map.getZoom();
                 }
+            },
+
+            on: function (event, callback) {
+                // Listen event and run callback in the context of this instance
+                var self = this;
+                google.maps.event.addListener(this.map, event, function (event) {
+                    callback.call(self, event);
+                });
             }
         };
 
