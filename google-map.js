@@ -22,6 +22,21 @@
                 google.maps.event.addListener(this.map, event, function (event) {
                     callback.call(self, event);
                 });
+            },
+
+            addMarker: function (options) {
+                options.position = {
+                    lat: options.lat,
+                    lng: options.lng
+                };
+
+                this._createMarker(options);
+            },
+
+            _createMarker: function (options) {
+                options.map = this.map;
+
+                return new google.maps.Marker(options);
             }
         };
 
