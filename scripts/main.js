@@ -2,11 +2,28 @@
 
     'use strict';
 
-    // DOM canvas for the map
-    var element = document.getElementById('map_canvas');
     // Actual map object
-    var map = GoogleMap.create(element, GoogleMap.MAP_OPTIONS);
+    var map = GoogleMap.create(document.getElementById('map_canvas'), GoogleMap.MAP_OPTIONS);
 
+    // Setup panorama
+    map.setPanorama(document.getElementById('pip_panorama'), {
+        position: {
+            lat: 37.791350,
+            lng: -122.435883
+        },
+        pov: {
+            heading: 200,
+            pitch: 0
+        },
+        events: [{
+            name: 'links_changed',
+            callback: function(event, panorama) {
+                console.log(panorama.getLinks());
+            }
+        }]
+    });
+
+    /*
     // Create marker with events
     map.addMarker({
         lat: 37.781350,
@@ -14,8 +31,10 @@
         draggable: true,
         events: [{
             name: 'click',
-            callback: function () {
+            callback: function (event, marker) {
                 alert('Clicked!');
+                console.log(event);
+                console.log(marker);
             }
         }, {
             name: 'dragend',
@@ -24,6 +43,7 @@
             }
         }]
     });
+    */
 
     /*
     // Create markers

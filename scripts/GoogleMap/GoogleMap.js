@@ -24,6 +24,16 @@
                 }
             },
 
+            setPanorama: function (element, options) {
+                var panorama = new google.maps.StreetViewPanorama(element, options);
+
+                if (options.events) {
+                    this._attachEvents(panorama, options.events);
+                }
+
+                this.map.setStreetView(panorama);
+            },
+
             addMarker: function (options) {
                 var self = this;
 
@@ -87,14 +97,16 @@
 
             _on: function (options) {
                 var self = this;
+
                 // Listen event and run callback in the context of this instance
                 google.maps.event.addListener(options.element, options.event, function (event) {
-                    options.callback.call(self, event);
+                    options.callback.call(self, event, options.element);
                 });
             },
 
             _attachEvents: function (element, events) {
                 var self = this;
+                
                 // Attach all events to target element
                 events.forEach(function (event) {
                     self._on({
