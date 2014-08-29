@@ -8,30 +8,28 @@
     var map = GoogleMap.create(element, GoogleMap.MAP_OPTIONS);
 
     // Create markers
-    var marker1 = map.addMarker({
-        id: 1,
-        lat: 37.791350,
-        lng: -122.435883,
-        icon: 'markers/fire.png', // http://mapicons.nicolasmollet.com/
-        draggable: true,
-        content: '<div style="font-weight: bold;">I like food</div>'
-    });
-    var marker2 = map.addMarker({
-        id: 2,
-        lat: 37.781350,
-        lng: -122.485883,
-        icon: 'markers/blast.png', // http://mapicons.nicolasmollet.com/
-        draggable: true,
-        content: '<div style="font-variant: small-caps;">I like nothing</div>'
-    });
+    var icons = ['abduction', 'blast', 'bomb', 'crimescene', 'fire', 'pirates', 'rape', 'robbery', 'shooting', 'theft', 'torture', 'war'];
+    for (var i = 0 ; i < 80 ; i++) {
+        var index = Math.floor(Math.random() * icons.length);
+        var icon  = icons[index];
+console.log('Icon ' + i, index, icon);
+        map.addMarker({
+            id: i + 1,
+            lat: 37.781350 + Math.random(),
+            lng: -122.485883 + Math.random(),
+            content: '<h3>' + icon.toUpperCase() + '</h3><p>Lorem ipsum</p>',
+            icon: 'markers/' + icon + '.png'
+        });
+    }
 
+    /*
     // Use collection related functions
     var found = map.findMarkerBy(function (marker) {
         return marker.id === 2;
     });
-    console.log(found);
     map.removeMarkerBy(function (marker) {
         return marker.id === 2;
     });
+    */
     
 }(window, window.GoogleMap));

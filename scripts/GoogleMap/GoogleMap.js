@@ -1,4 +1,4 @@
-(function (window, google, Collection) {
+(function (window, google, Collection, MarkerClusterer) {
 
     'use strict';
 
@@ -8,6 +8,10 @@
             this.map = new google.maps.Map(element, options);
 
             this.markers = Collection.create();
+
+            if (options.cluster) {
+                this.markerClusterer = new MarkerClusterer(this.map, [], options.cluster.options);
+            }
         }
 
         GoogleMap.prototype = {
@@ -59,9 +63,15 @@
             },
 
             removeMarkerBy: function (callback) {
-                return this.markers.find(callback, function (markers) {
+                var self = this;
+
+                self.markers.find(callback, function (markers) {
                     markers.forEach(function (marker) {
-                        marker.setMap(null);
+                        if (self.markerClusterer) {
+                            self.markerClusterer.removeMarker(marker);
+                        } else {
+                            marker.setMap(null);
+                        }
                     });
                 });
             },
@@ -69,8 +79,12 @@
             _createMarker: function (options) {
                 options.map = this.map;
 
+                // Create marker and add it to collection and clustering system
                 var marker = new google.maps.Marker(options);
                 this.markers.add(marker);
+                if (this.markerClusterer) {
+                    this.markerClusterer.addMarker(marker);
+                }
 
                 return marker;
             },
@@ -95,4 +109,4 @@
 
     window.GoogleMap = GoogleMap;
 
-}(window, google, window.Collection));
+}(window, window.google, window.Collection, window.MarkerClusterer));

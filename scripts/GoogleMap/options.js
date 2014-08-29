@@ -14,7 +14,29 @@
         mapTypeId: google.maps.MapTypeId.SATELLITE, // HYBRID, ROADMAP
         draggable: true,
         scrollwheel: true,
-        disableDefaultUI: true
+        disableDefaultUI: true,
+        //zoomControlOptions: {
+        //    position: google.maps.ControlPosition.LEFT_BOTTOM,
+        //    style: google.maps.ZoomControlStyle.DEFAULT
+        //},
+        //panControlOptions: {
+        //    position: google.maps.ControlPosition.LEFT_BOTTOM
+        //},
+        cluster: {
+            options: {
+                styles: [{
+                    url: 'clusters/m2.png',
+                    width: 56,
+                    height: 55,
+                    textColor: '#fff',
+                    textSize: 13
+                }, {
+                    url: 'clusters/m1.png',
+                    width: 53,
+                    height: 52
+                }]
+            }
+        }
     };
 
 }(window.google, window.GoogleMap));
