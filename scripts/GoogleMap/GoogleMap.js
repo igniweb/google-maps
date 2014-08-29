@@ -1,16 +1,16 @@
-(function (window, google) {
+(function (window, google, Collection) {
 
     'use strict';
 
-    var googleMap = (function () {
+    var GoogleMap = (function () {
 
-        function googleMap(element, options) {
+        function GoogleMap(element, options) {
             this.map = new google.maps.Map(element, options);
 
-            this.markers = [];
+            this.markers = Collection.create();
         }
 
-        googleMap.prototype = {
+        GoogleMap.prototype = {
 
             zoom: function (level) {
                 if (level) {
@@ -54,30 +54,23 @@
                 return marker;
             },
 
-            delMarker: function (marker) {
-                var indexOf = this.markers.indexOf(marker);
-                if (indexOf !== -1) {
-                    this.markers.splice(indexOf, 1);
-                    marker.setMap(null);
-                }
+            findMarkerBy: function (callback) {
+                return this.markers.find(callback);
             },
 
-            findMarkerByLat: function (lat) {
-                for (var i = 0 ; i < this.markers.length ; i++) {
-                    var marker = this.markers[i];
-                    if (marker.position.lat() === lat) {
-                        return marker;
-                    }
-                }
-
-                return false;
+            removeMarkerBy: function (callback) {
+                return this.markers.find(callback, function (markers) {
+                    markers.forEach(function (marker) {
+                        marker.setMap(null);
+                    });
+                });
             },
 
             _createMarker: function (options) {
                 options.map = this.map;
 
                 var marker = new google.maps.Marker(options);
-                this.markers.push(marker);
+                this.markers.add(marker);
 
                 return marker;
             },
@@ -92,14 +85,14 @@
 
         };
 
-        return googleMap;
+        return GoogleMap;
         
     }());
 
-    googleMap.create = function (element, options) {
-        return new googleMap(element, options);
+    GoogleMap.create = function (element, options) {
+        return new GoogleMap(element, options);
     };
 
-    window.googleMap = googleMap;
+    window.GoogleMap = GoogleMap;
 
-}(window, google));
+}(window, google, window.Collection));
