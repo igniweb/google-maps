@@ -34,12 +34,8 @@
 
                 var marker = this._createMarker(options);
 
-                if (options.event) {
-                    this._on({
-                        element: marker,
-                        event: options.event.name,
-                        callback: options.event.callback
-                    });
+                if (options.events) {
+                    this._attachEvents(marker, options.events);
                 }
 
                 if (options.content) {
@@ -90,10 +86,22 @@
             },
 
             _on: function (options) {
-                // Listen event and run callback in the context of this instance
                 var self = this;
+                // Listen event and run callback in the context of this instance
                 google.maps.event.addListener(options.element, options.event, function (event) {
                     options.callback.call(self, event);
+                });
+            },
+
+            _attachEvents: function (element, events) {
+                var self = this;
+                // Attach all events to target element
+                events.forEach(function (event) {
+                    self._on({
+                        element: element,
+                        event: event.name,
+                        callback: event.callback
+                    });
                 });
             }
 
