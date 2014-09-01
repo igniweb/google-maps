@@ -40,6 +40,14 @@
         }
     });
 
+    // HTML5 geolocation
+    map.getCurrentPosition(function (position) {
+        map.addMarker({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        });
+    });
+
     /*
     // Create marker with events
     map.addMarker({

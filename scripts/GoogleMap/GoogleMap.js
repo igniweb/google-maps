@@ -42,6 +42,16 @@
                 }
             },
 
+            getCurrentPosition: function (callback) {
+                if (navigator.geolocation) {
+                    var self = this;
+
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        callback.call(self, position);
+                    });
+                }
+            },
+
             setPanorama: function (element, options) {
                 var panorama = new google.maps.StreetViewPanorama(element, options);
 
