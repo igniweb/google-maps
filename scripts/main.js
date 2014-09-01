@@ -5,6 +5,7 @@
     // Actual map object
     var map = GoogleMap.create(document.getElementById('map_canvas'), GoogleMap.MAP_OPTIONS);
 
+    /*
     // Setup panorama
     map.setPanorama(document.getElementById('pip_panorama'), {
         position: {
@@ -21,6 +22,22 @@
                 console.log(panorama.getLinks());
             }
         }]
+    });
+    */
+
+    // Geocode
+    map.geocode({
+        address: 'Golden Gate Bridge, San Francisco, CA',
+        success: function (results, status) {
+            var result = results[0];
+            map.addMarker({
+                lat: result.geometry.location.lat(),
+                lng: result.geometry.location.lng()
+            });
+        },
+        error: function (status) {
+            console.error(status);
+        }
     });
 
     /*

@@ -14,14 +14,14 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP, // HYBRID, ROADMAP, SATELLITE
         draggable: true,
         scrollwheel: true,
-        disableDefaultUI: true,
-        //zoomControlOptions: {
-        //    position: google.maps.ControlPosition.LEFT_BOTTOM,
-        //    style: google.maps.ZoomControlStyle.DEFAULT
-        //},
-        //panControlOptions: {
-        //    position: google.maps.ControlPosition.LEFT_BOTTOM
-        //},
+        disableDefaultUI: false,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_BOTTOM,
+            style: google.maps.ZoomControlStyle.DEFAULT
+        },
+        panControlOptions: {
+            position: google.maps.ControlPosition.LEFT_BOTTOM
+        },
         //cluster: {
         //    options: {
         //        styles: [{
@@ -36,7 +36,8 @@
         //            height: 52
         //        }]
         //    }
-        //}
+        //},
+        geocoder: true
     };
 
 }(window.google, window.GoogleMap));

@@ -12,6 +12,10 @@
             if (options.cluster) {
                 this.markerClusterer = new MarkerClusterer(this.map, [], options.cluster.options);
             }
+
+            if (options.geocoder) {
+                this.geocoder = new google.maps.Geocoder();
+            }
         }
 
         GoogleMap.prototype = {
@@ -21,6 +25,20 @@
                     this.map.setZoom(level);
                 } else {
                     return this.map.getZoom();
+                }
+            },
+
+            geocode: function (options) {
+                if (this.geocoder) {
+                    this.geocoder.geocode({
+                        address: options.address
+                    }, function (results, status) {
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            options.success.call(this, results, status);
+                        } else {
+                            options.error.call(this, status);
+                        }
+                    });
                 }
             },
 
