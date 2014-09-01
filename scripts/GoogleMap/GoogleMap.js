@@ -1,7 +1,7 @@
 (function (window, google, Collection, MarkerClusterer) {
 
     'use strict';
-
+// https://developers.google.com/maps/documentation/javascript/styling?hl=fr#style_syntax
     var GoogleMap = (function () {
 
         function GoogleMap(element, options) {
